@@ -21,7 +21,20 @@
                 <li><a href="about.html">Biz haqimizda</a></li>
                 <li><a href="contact.html">Aloqa</a></li>
             </ul>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <div class="nav-actions">
+                <div class="search-box">
+                    <button class="search-icon" id="searchIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                    </button>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Qidirish...">
+                </div>
                 <a href="login.html" class="btn btn-login" id="loginBtn">Kirish</a>
                 <button class="theme-toggle" id="themeToggle">🌙</button>
             </div>
@@ -46,23 +59,30 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="region">Hudud/Viloyat *</label>
-                        <select id="region" required>
+                        <label for="province">Viloyat *</label>
+                        <select id="province" required>
                             <option value="">Tanlang</option>
-                            <option value="tashkent">Toshkent shahri</option>
-                            <option value="tashkent-region">Toshkent viloyati</option>
-                            <option value="samarkand">Samarqand</option>
-                            <option value="bukhara">Buxoro</option>
-                            <option value="andijan">Andijon</option>
-                            <option value="fergana">Farg'ona</option>
+                            <option value="toshkent-shahar">Toshkent shahri</option>
+                            <option value="toshkent-viloyat">Toshkent viloyati</option>
+                            <option value="samarqand">Samarqand</option>
+                            <option value="buxoro">Buxoro</option>
+                            <option value="fargona">Farg'ona</option>
+                            <option value="andijon">Andijon</option>
                             <option value="namangan">Namangan</option>
-                            <option value="kashkadarya">Qashqadaryo</option>
-                            <option value="surkhandarya">Surxondaryo</option>
-                            <option value="jizzakh">Jizzax</option>
-                            <option value="sirdarya">Sirdaryo</option>
+                            <option value="qashqadaryo">Qashqadaryo</option>
+                            <option value="surxondaryo">Surxondaryo</option>
+                            <option value="jizzax">Jizzax</option>
+                            <option value="sirdaryo">Sirdaryo</option>
                             <option value="navoiy">Navoiy</option>
-                            <option value="khorezm">Xorazm</option>
-                            <option value="karakalpakstan">Qoraqalpog'iston</option>
+                            <option value="xorazm">Xorazm</option>
+                            <option value="qoraqalpogiston">Qoraqalpog'iston</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="district">Tuman/Shahar *</label>
+                        <select id="district" required disabled>
+                            <option value="">Avval viloyat tanlang</option>
                         </select>
                     </div>
 
@@ -99,7 +119,7 @@
                     <div class="form-group checkbox-group">
                         <label>
                             <input type="checkbox" id="terms" required>
-                            <span>Men foydalanish shartlarini qabul qilaman</span>
+                            <span>Men <a href="terms.html" target="_blank" style="color: var(--accent-color); text-decoration: underline;">foydalanish shartlarini</a> qabul qilaman</span>
                         </label>
                     </div>
 

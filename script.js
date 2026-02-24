@@ -1,6 +1,35 @@
 // Theme toggle functionality
 const themeToggle = document.getElementById('themeToggle');
 const htmlElement = document.documentElement;
+const navbar = document.querySelector('.navbar');
+const searchBox = document.querySelector('.search-box');
+const searchInput = document.getElementById('searchInput');
+
+// Search box hover animation
+if (searchBox) {
+    searchBox.addEventListener('mouseenter', () => {
+        navbar.classList.add('search-active');
+    });
+    
+    searchBox.addEventListener('mouseleave', () => {
+        if (!searchInput.matches(':focus')) {
+            navbar.classList.remove('search-active');
+        }
+    });
+    
+    searchInput.addEventListener('blur', () => {
+        navbar.classList.remove('search-active');
+    });
+}
+
+// Navbar scroll blur animation
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
 
 // Load saved theme
 const savedTheme = localStorage.getItem('theme') || 'light';
@@ -28,6 +57,29 @@ if (sellForm) {
     const powerAmountInput = document.getElementById('powerAmount');
     const pricePerKwhInput = document.getElementById('pricePerKwh');
     const totalPriceSpan = document.getElementById('totalPrice');
+    const provinceSelect = document.getElementById('province');
+    const districtSelect = document.getElementById('district');
+
+    // Province to district mapping
+    if (provinceSelect && districtSelect) {
+        provinceSelect.addEventListener('change', () => {
+            const province = provinceSelect.value;
+            districtSelect.innerHTML = '<option value="">Tanlang</option>';
+            
+            if (province && districts[province]) {
+                districtSelect.disabled = false;
+                districts[province].forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.toLowerCase();
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            } else {
+                districtSelect.disabled = true;
+                districtSelect.innerHTML = '<option value="">Avval viloyat tanlang</option>';
+            }
+        });
+    }
 
     function calculateTotal() {
         const amount = parseFloat(powerAmountInput.value) || 0;
@@ -45,7 +97,8 @@ if (sellForm) {
         const formData = {
             name: document.getElementById('sellerName').value,
             phone: document.getElementById('phone').value,
-            region: document.getElementById('region').value,
+            province: document.getElementById('province').value,
+            district: document.getElementById('district').value,
             address: document.getElementById('address').value,
             powerAmount: document.getElementById('powerAmount').value,
             pricePerKwh: document.getElementById('pricePerKwh').value,
@@ -58,6 +111,8 @@ if (sellForm) {
         alert('E\'loningiz muvaffaqiyatli yuborildi! Tez orada siz bilan bog\'lanamiz.');
         sellForm.reset();
         totalPriceSpan.textContent = '0';
+        districtSelect.disabled = true;
+        districtSelect.innerHTML = '<option value="">Avval viloyat tanlang</option>';
     });
 }
 
@@ -81,14 +136,53 @@ if (contactForm) {
 }
 
 // Product filters
-const filterRegion = document.getElementById('filterRegion');
+const filterProvince = document.getElementById('filterProvince');
+const filterDistrict = document.getElementById('filterDistrict');
 const filterPrice = document.getElementById('filterPrice');
 const sortBy = document.getElementById('sortBy');
 const filterMinKwh = document.getElementById('filterMinKwh');
 const filterMaxKwh = document.getElementById('filterMaxKwh');
 
-if (filterRegion && filterPrice && sortBy) {
-    filterRegion.addEventListener('change', filterProducts);
+const districts = {
+    'toshkent-shahar': ['Chilonzor', 'Yunusobod', 'Mirobod', 'Yakkasaroy', 'Sergeli', 'Bektemir', 'Uchtepa', 'Yashnobod', 'Olmazor', 'Shayxontohur', "Mirzo Ulug'bek"],
+    'toshkent-viloyat': ['Angren', 'Olmaliq', 'Chirchiq', 'Bekobod', 'Ohangaron', "Yangiyo'l"],
+    'samarqand': ['Samarqand shahri', 'Registon', "Kattaqo'rg'on", 'Jomboy', 'Urgut'],
+    'buxoro': ['Buxoro shahri', 'Kogon', "G'ijduvon", 'Olot'],
+    'fargona': ["Farg'ona shahri", "Qo'qon", "Marg'ilon", 'Quvasoy', 'Rishton'],
+    'andijon': ['Andijon shahri', 'Asaka', "Xo'jaobod", "Paytug'"],
+    'namangan': ['Namangan shahri', 'Chortoq', 'Chust', 'Pop'],
+    'qashqadaryo': ['Qarshi', 'Shahrisabz', 'Koson', 'Muborak'],
+    'surxondaryo': ['Termiz', 'Denov', 'Boysun', "Jarqo'rg'on"],
+    'jizzax': ['Jizzax shahri', 'Zomin', "G'allaorol"],
+    'sirdaryo': ['Guliston', 'Yangiyer', 'Sirdaryo'],
+    'navoiy': ['Navoiy shahri', 'Zarafshon', 'Nurota', 'Uchquduq'],
+    'xorazm': ['Urganch', 'Xiva', 'Pitnak', 'Xonqa', 'Shovot'],
+    'qoraqalpogiston': ['Nukus', 'Beruniy', "To'rtko'l", "Xo'jayli", "Qo'ng'irot"]
+};
+
+if (filterProvince) {
+    filterProvince.addEventListener('change', () => {
+        const province = filterProvince.value;
+        filterDistrict.innerHTML = '<option value="">Barchasi</option>';
+        
+        if (province && districts[province]) {
+            filterDistrict.disabled = false;
+            districts[province].forEach(district => {
+                const option = document.createElement('option');
+                option.value = district.toLowerCase();
+                option.textContent = district;
+                filterDistrict.appendChild(option);
+            });
+        } else {
+            filterDistrict.disabled = true;
+            filterDistrict.innerHTML = '<option value="">Avval viloyat tanlang</option>';
+        }
+        filterProducts();
+    });
+}
+
+if (filterProvince && filterPrice && sortBy) {
+    filterDistrict.addEventListener('change', filterProducts);
     filterPrice.addEventListener('change', filterProducts);
     sortBy.addEventListener('change', filterProducts);
     if (filterMinKwh) filterMinKwh.addEventListener('input', filterProducts);
@@ -96,7 +190,7 @@ if (filterRegion && filterPrice && sortBy) {
 }
 
 function filterProducts() {
-    const region = filterRegion?.value.toLowerCase().trim();
+    const district = filterDistrict?.value.toLowerCase().trim();
     const minKwh = parseFloat(filterMinKwh?.value) || 0;
     const maxKwh = parseFloat(filterMaxKwh?.value) || Infinity;
     
@@ -109,10 +203,9 @@ function filterProducts() {
         
         let showCard = true;
         
-        // Region filter - check if region is empty or matches
-        if (region && region !== '') {
-            // Check if card title contains the region
-            if (!cardTitle.includes(region)) {
+        // District filter
+        if (district && district !== '') {
+            if (!cardTitle.includes(district)) {
                 showCard = false;
             }
         }
@@ -272,6 +365,14 @@ if (currentUser && loginBtn) {
     const navActions = loginBtn.parentElement;
     const userAvatar = currentUser.avatar || '';
     navActions.innerHTML = `
+        <div class="search-box">
+            <button class="search-icon" id="searchIcon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+            </button>
+            <input type="text" class="search-input" id="searchInput" placeholder="Qidirish...">
+        </div>
         <div class="user-menu">
             <button class="btn btn-user" id="userMenuBtn">
                 ${userAvatar ? `<img src="${userAvatar}" alt="Avatar" class="user-avatar-img">` : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="32" height="32">
@@ -330,6 +431,25 @@ if (currentUser && loginBtn) {
     // User menu toggle
     const userMenuBtn = document.getElementById('userMenuBtn');
     const userDropdown = document.getElementById('userDropdown');
+    const newSearchBox = document.querySelector('.search-box');
+    const newSearchInput = document.getElementById('searchInput');
+    
+    // Re-initialize search box animation
+    if (newSearchBox && newSearchInput) {
+        newSearchBox.addEventListener('mouseenter', () => {
+            navbar.classList.add('search-active');
+        });
+        
+        newSearchBox.addEventListener('mouseleave', () => {
+            if (!newSearchInput.matches(':focus')) {
+                navbar.classList.remove('search-active');
+            }
+        });
+        
+        newSearchInput.addEventListener('blur', () => {
+            navbar.classList.remove('search-active');
+        });
+    }
     
     userMenuBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -402,7 +522,7 @@ function showCustomAlert(title, message, onConfirm) {
             <p>${message}</p>
             <div class="alert-buttons">
                 <button class="btn btn-primary" onclick="this.closest('.custom-alert-modal').remove(); document.body.style.overflow='auto'; ${onConfirm ? 'arguments[0]()' : ''}" data-callback="${onConfirm ? 'true' : 'false'}">OK</button>
-                ${onConfirm ? '<button class="btn btn-cancel" onclick="this.closest(\'custom-alert-modal\').remove(); document.body.style.overflow=\'auto\'">Bekor qilish</button>' : ''}
+                ${onConfirm ? '<button class="btn btn-cancel" onclick="this.closest(\'.custom-alert-modal\').remove(); document.body.style.overflow=\'auto\'">Bekor qilish</button>' : ''}
             </div>
         </div>
     `;

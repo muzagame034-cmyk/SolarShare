@@ -56,12 +56,30 @@ body {
     z-index: 100;
     padding: 1rem 0;
     border-bottom: 1px solid var(--border-color);
+    transition: all 0.4s ease;
+    border-radius: 0;
+    margin: 0;
+}
+
+.navbar.scrolled {
+    border-radius: 100px;
+    margin: 1rem auto;
+    max-width: 85%;
+    border-bottom: none;
+    top: 2px;
+    padding: 0.8rem 0;
 }
 
 .navbar .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.4s ease;
+}
+
+.navbar.search-active .logo,
+.navbar.search-active .nav-menu {
+    transform: translateX(-200px);
 }
 
 .menu-toggle {
@@ -88,6 +106,68 @@ body {
     gap: 1rem;
 }
 
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-box:hover ~ .btn-login,
+.search-box:hover ~ .theme-toggle {
+    transform: translateX(0);
+}
+
+.search-icon {
+    background: var(--accent-color);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.search-icon:hover {
+    background: var(--accent-hover);
+    transform: scale(1.05);
+}
+
+.search-icon svg {
+    color: white;
+}
+
+.search-input {
+    position: absolute;
+    right: 0;
+    width: 0;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 1;
+}
+
+.search-box:hover .search-input,
+.search-input:focus {
+    width: 200px;
+    padding: 0 50px 0 20px;
+    opacity: 1;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: var(--accent-color);
+}
+
 .btn-login {
     padding: 0.5rem 1.5rem;
     background: var(--accent-color);
@@ -107,6 +187,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    transition: transform 0.4s ease;
 }
 
 .logo-icon {
@@ -128,6 +209,7 @@ body {
     display: flex;
     list-style: none;
     gap: 2rem;
+    transition: transform 0.4s ease;
 }
 
 .nav-menu a {
@@ -1145,6 +1227,27 @@ footer {
 
     .nav-actions {
         gap: 0.5rem;
+    }
+
+    .btn-login {
+        padding: 0.5rem;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0;
+    }
+
+    .btn-login::before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>');
+        background-size: contain;
+        background-repeat: no-repeat;
     }
 
     .btn-language {
