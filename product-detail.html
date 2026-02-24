@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="icons8-solar-panel-50.png">
+    <title>Mahsulot - Solar Share</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="icons8-solar-panel-50.png" alt="Solar" class="logo-icon">
+                <h2>Solar Share</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Bosh sahifa</a></li>
+                <li><a href="sell.html">Elektr sotish</a></li>
+                <li><a href="products.html">Mahsulotlar</a></li>
+                <li><a href="about.html">Biz haqimizda</a></li>
+                <li><a href="contact.html">Aloqa</a></li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-login" id="loginBtn">Kirish</a>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="product-detail-section">
+        <div class="container">
+            <a href="products.html" class="back-link">← Mahsulotlarga qaytish</a>
+            
+            <div class="product-detail-content">
+                <div class="product-detail-card">
+                    <div class="product-badge" id="productBadge"></div>
+                    <h1 id="productTitle"></h1>
+                    <div class="product-status available" id="productStatus">Mavjud</div>
+                    
+                    <div class="product-detail-info">
+                        <div class="detail-row">
+                            <span class="label">Miqdor:</span>
+                            <span class="value" id="productAmount"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Narx:</span>
+                            <span class="value" id="productPrice"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Panel quvvati:</span>
+                            <span class="value" id="productCapacity"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Hudud:</span>
+                            <span class="value" id="productRegion"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Jami summa:</span>
+                            <span class="value total" id="productTotal"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="product-description">
+                        <h3>Qo'shimcha ma'lumot</h3>
+                        <p id="productDescription"></p>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-block btn-large" id="purchaseBtn">Sotib olish</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Solar Share</h3>
+                    <p>O'zbekistonda birinchi quyosh energiyasi bozori. Yashil energiya kelajagimiz uchun.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Solar Share. Barcha huquqlar himoyalangan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="product-detail.js"></script>
+</body>
+</html>
