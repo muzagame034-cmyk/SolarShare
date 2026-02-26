@@ -709,6 +709,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Hero animation on page load
 window.addEventListener('load', () => {
+    // Hide loader after page loads + 1 second
+    const loader = document.getElementById('loader');
+    if (loader) {
+        setTimeout(() => {
+            loader.classList.add('hidden');
+            document.body.classList.remove('loading');
+        }, 1000);
+    }
+    
     const heroElements = document.querySelectorAll('.hero .fade-in');
     heroElements.forEach((el, index) => {
         setTimeout(() => {

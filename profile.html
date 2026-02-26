@@ -40,6 +40,7 @@
                     </div>
                     <input type="file" id="avatarInput" accept="image/*" style="display: none;">
                     <button class="btn btn-secondary" onclick="document.getElementById('avatarInput').click()" style="margin-top: 1rem;">Rasm yuklash</button>
+                    <button class="btn btn-danger" id="removeAvatarBtn" onclick="removeAvatar()" style="margin-top: 0.5rem; display: none;">Rasmni o'chirish</button>
                     <h2 id="profileName">Foydalanuvchi</h2>
                     <p id="profileEmail">email@example.com</p>
                 </div>
@@ -131,6 +132,7 @@
                 document.getElementById('defaultAvatar').style.display = 'none';
                 document.getElementById('userAvatarImg').style.display = 'block';
                 document.getElementById('userAvatarImg').src = user.avatar;
+                document.getElementById('removeAvatarBtn').style.display = 'block';
             }
             
             // Handle avatar upload
@@ -155,12 +157,32 @@
                         document.getElementById('defaultAvatar').style.display = 'none';
                         document.getElementById('userAvatarImg').style.display = 'block';
                         document.getElementById('userAvatarImg').src = avatarUrl;
+                        document.getElementById('removeAvatarBtn').style.display = 'block';
                         
                         showCustomAlert('Muvaffaqiyatli!', 'Profil rasmi yangilandi!');
                     };
                     reader.readAsDataURL(file);
                 }
             });
+        }
+        
+        function removeAvatar() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            delete user.avatar;
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userIndex = users.findIndex(u => u.email === user.email);
+            if (userIndex !== -1) {
+                delete users[userIndex].avatar;
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            
+            document.getElementById('defaultAvatar').style.display = 'block';
+            document.getElementById('userAvatarImg').style.display = 'none';
+            document.getElementById('removeAvatarBtn').style.display = 'none';
+            
+            showCustomAlert('Muvaffaqiyatli!', 'Profil rasmi o\'chirildi!');
         }
     </script>
 </body>
